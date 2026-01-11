@@ -24,13 +24,14 @@ const HERO_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 }`);
 
 export async function HeroSection() {
-  const { data: profile } = await sanityFetch({ query: HERO_QUERY });
+  try {
+    const { data: profile } = await sanityFetch({ query: HERO_QUERY });
 
-  if (!profile) {
-    return null;
-  }
+    if (!profile) {
+      return null;
+    }
 
-  return (
+    return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
@@ -148,4 +149,10 @@ export async function HeroSection() {
       </div>
     </section>
   );
+  } catch (error) {
+    // Return null instead of throwing to prevent error from propagating
+    // This allows the page to render even if this section fails
+    console.error('HeroSection: Failed to fetch profile data', error);
+    return null;
+  }
 }

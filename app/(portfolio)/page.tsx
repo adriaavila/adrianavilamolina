@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import PortfolioContent from "@/components/PortfolioContent";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className="min-h-screen">
-      <PortfolioContent />
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+        <PortfolioContent />
+      </Suspense>
     </main>
   );
 }

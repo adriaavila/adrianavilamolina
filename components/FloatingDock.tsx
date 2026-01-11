@@ -11,11 +11,15 @@ const NAVIGATION_QUERY =
 }`);
 
 export async function FloatingDock() {
-  const { data: navItems } = await sanityFetch({ query: NAVIGATION_QUERY });
+  try {
+    const { data: navItems } = await sanityFetch({ query: NAVIGATION_QUERY });
 
-  if (!navItems || navItems.length === 0) {
-    return null;
+    if (!navItems || navItems.length === 0) {
+      return null;
+    }
+
+    return <FloatingDockClient navItems={navItems} />;
+  } catch (error) {
+    throw error;
   }
-
-  return <FloatingDockClient navItems={navItems} />;
 }

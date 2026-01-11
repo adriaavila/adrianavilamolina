@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
 import "../globals.css";
 import { draftMode } from "next/headers";
-import Script from "next/script";
+import { Suspense } from "react";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ModeToggle } from "@/components/DarkModeToggle";
@@ -46,17 +46,14 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Script
-              src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"
-              strategy="afterInteractive"
-            />
-
             <SidebarProvider defaultOpen={false}>
               <SidebarInset className="">{children}</SidebarInset>
 
               <AppSidebar side="right" />
 
-              <FloatingDock />
+              <Suspense fallback={null}>
+                <FloatingDock />
+              </Suspense>
               <SidebarToggle />
 
               {/* Mode Toggle - Desktop: bottom right next to AI chat, Mobile: top right next to burger menu */}
