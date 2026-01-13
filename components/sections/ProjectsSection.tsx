@@ -17,7 +17,14 @@ const PROJECTS_QUERY =
 }`);
 
 export async function ProjectsSection() {
-  const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
+  let projects;
+  try {
+    const result = await sanityFetch({ query: PROJECTS_QUERY });
+    projects = result.data;
+  } catch (error) {
+    console.error("ProjectsSection fetch failed", error);
+    return null;
+  }
 
   if (!projects || projects.length === 0) {
     return null;

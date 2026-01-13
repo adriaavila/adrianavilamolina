@@ -16,9 +16,16 @@ const BLOG_QUERY = defineQuery(`*[_type == "blog"] | order(publishedAt desc){
 }`);
 
 export async function BlogSection() {
-  const { data: posts } = await sanityFetch({
-    query: BLOG_QUERY,
-  });
+  let posts;
+  try {
+    const result = await sanityFetch({
+      query: BLOG_QUERY,
+    });
+    posts = result.data;
+  } catch (error) {
+    console.error("BlogSection fetch failed", error);
+    return null;
+  }
 
   if (!posts || posts.length === 0) {
     return null;

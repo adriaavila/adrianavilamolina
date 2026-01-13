@@ -22,7 +22,14 @@ const EDUCATION_QUERY =
 }`);
 
 export async function EducationSection() {
-  const { data: education } = await sanityFetch({ query: EDUCATION_QUERY });
+  let education;
+  try {
+    const result = await sanityFetch({ query: EDUCATION_QUERY });
+    education = result.data;
+  } catch (error) {
+    console.error("EducationSection fetch failed", error);
+    return null;
+  }
 
   if (!education || education.length === 0) {
     return null;

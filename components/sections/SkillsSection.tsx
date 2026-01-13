@@ -13,7 +13,14 @@ const SKILLS_QUERY =
 }`);
 
 export async function SkillsSection() {
-  const { data: skills } = await sanityFetch({ query: SKILLS_QUERY });
+  let skills;
+  try {
+    const result = await sanityFetch({ query: SKILLS_QUERY });
+    skills = result.data;
+  } catch (error) {
+    console.error("SkillsSection fetch failed", error);
+    return null;
+  }
 
   if (!skills || skills.length === 0) {
     return null;

@@ -22,7 +22,14 @@ const EXPERIENCE_QUERY =
 }`);
 
 export async function ExperienceSection() {
-  const { data: experiences } = await sanityFetch({ query: EXPERIENCE_QUERY });
+  let experiences;
+  try {
+    const result = await sanityFetch({ query: EXPERIENCE_QUERY });
+    experiences = result.data;
+  } catch (error) {
+    console.error("ExperienceSection fetch failed", error);
+    return null;
+  }
 
   if (!experiences || experiences.length === 0) {
     return null;

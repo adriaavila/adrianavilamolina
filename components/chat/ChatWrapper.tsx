@@ -23,7 +23,14 @@ const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   }`);
 
 async function ChatWrapper() {
-  const { data: profile } = await sanityFetch({ query: CHAT_PROFILE_QUERY });
+  let profile;
+  try {
+    const result = await sanityFetch({ query: CHAT_PROFILE_QUERY });
+    profile = result.data;
+  } catch (error) {
+    console.error("ChatWrapper fetch failed", error);
+    return null;
+  }
 
   return (
     <div className="h-full w-full">

@@ -1,11 +1,7 @@
 import {
   AboutSection,
-  AchievementsSection,
   BlogSection,
-  CertificationsSection,
   ContactSection,
-  EducationSection,
-  ExperienceSection,
   HeroSection,
   ProjectsSection,
   ServicesSection,
@@ -20,11 +16,7 @@ async function PortfolioContent() {
       <AboutSection />
       <TestimonialsSection />
       <SkillsSection />
-      <ExperienceSection />
-      <EducationSection />
       <ProjectsSection />
-      <CertificationsSection />
-      <AchievementsSection />
       <ServicesSection />
       <BlogSection />
       <ContactSection />

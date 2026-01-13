@@ -21,9 +21,16 @@ const CERTIFICATIONS_QUERY =
 }`);
 
 export async function CertificationsSection() {
-  const { data: certifications } = await sanityFetch({
-    query: CERTIFICATIONS_QUERY,
-  });
+  let certifications;
+  try {
+    const result = await sanityFetch({
+      query: CERTIFICATIONS_QUERY,
+    });
+    certifications = result.data;
+  } catch (error) {
+    console.error("CertificationsSection fetch failed", error);
+    return null;
+  }
 
   if (!certifications || certifications.length === 0) {
     return null;
@@ -168,8 +175,8 @@ export async function CertificationsSection() {
                               {cert.skills.slice(0, 4).map((skill, idx) => {
                                 const skillData =
                                   skill &&
-                                  typeof skill === "object" &&
-                                  "name" in skill
+                                    typeof skill === "object" &&
+                                    "name" in skill
                                     ? skill
                                     : null;
                                 return skillData?.name ? (

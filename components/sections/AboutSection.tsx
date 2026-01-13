@@ -15,7 +15,14 @@ const ABOUT_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 }`);
 
 export async function AboutSection() {
-  const { data: profile } = await sanityFetch({ query: ABOUT_QUERY });
+  let profile;
+  try {
+    const result = await sanityFetch({ query: ABOUT_QUERY });
+    profile = result.data;
+  } catch (error) {
+    console.error("AboutSection fetch failed", error);
+    return null;
+  }
 
   if (!profile) {
     return null;

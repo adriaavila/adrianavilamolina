@@ -17,9 +17,16 @@ const TESTIMONIALS_QUERY =
 }`);
 
 export async function TestimonialsSection() {
-  const { data: testimonials } = await sanityFetch({
-    query: TESTIMONIALS_QUERY,
-  });
+  let testimonials;
+  try {
+    const result = await sanityFetch({
+      query: TESTIMONIALS_QUERY,
+    });
+    testimonials = result.data;
+  } catch (error) {
+    console.error("TestimonialsSection fetch failed", error);
+    return null;
+  }
 
   if (!testimonials || testimonials.length === 0) {
     return null;

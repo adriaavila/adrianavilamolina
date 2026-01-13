@@ -19,9 +19,16 @@ const ACHIEVEMENTS_QUERY =
 }`);
 
 export async function AchievementsSection() {
-  const { data: achievements } = await sanityFetch({
-    query: ACHIEVEMENTS_QUERY,
-  });
+  let achievements;
+  try {
+    const result = await sanityFetch({
+      query: ACHIEVEMENTS_QUERY,
+    });
+    achievements = result.data;
+  } catch (error) {
+    console.error("AchievementsSection fetch failed", error);
+    return null;
+  }
 
   if (!achievements || achievements.length === 0) {
     return null;

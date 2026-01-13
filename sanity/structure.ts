@@ -61,50 +61,6 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      // Professional Background
-      S.listItem()
-        .title("Professional Background")
-        .icon(CaseIcon)
-        .child(
-          S.list()
-            .title("Professional Background")
-            .items([
-              S.listItem()
-                .title("Work Experience")
-                .icon(CaseIcon)
-                .schemaType("experience")
-                .child(
-                  S.documentTypeList("experience").title("Work Experience"),
-                ),
-
-              S.listItem()
-                .title("Education")
-                .icon(BookIcon)
-                .schemaType("education")
-                .child(S.documentTypeList("education").title("Education")),
-
-              S.listItem()
-                .title("Certifications")
-                .icon(DocumentIcon)
-                .schemaType("certification")
-                .child(
-                  S.documentTypeList("certification").title("Certifications"),
-                ),
-
-              S.listItem()
-                .title("Achievements & Awards")
-                .icon(StarIcon)
-                .schemaType("achievement")
-                .child(
-                  S.documentTypeList("achievement").title(
-                    "Achievements & Awards",
-                  ),
-                ),
-            ]),
-        ),
-
-      S.divider(),
-
       // Content & Community
       S.listItem()
         .title("Content & Community")

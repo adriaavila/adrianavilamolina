@@ -23,7 +23,14 @@ const SERVICES_QUERY =
 }`);
 
 export async function ServicesSection() {
-  const { data: services } = await sanityFetch({ query: SERVICES_QUERY });
+  let services;
+  try {
+    const result = await sanityFetch({ query: SERVICES_QUERY });
+    services = result.data;
+  } catch (error) {
+    console.error("ServicesSection fetch failed", error);
+    return null;
+  }
 
   if (!services || services.length === 0) {
     return null;

@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { FloatingDockClient } from "./FloatingDockClient";
 
 const NAVIGATION_QUERY =
-  defineQuery(`*[_type == "navigation"] | order(order asc){
+  defineQuery(`*[_type == "navigation" && !(lower(title) in ["experience", "achievements", "education", "certifications"]) && !(lower(href) in ["#experience", "#achievements", "#education", "#certifications"])] | order(order asc){
   title,
   href,
   icon,
@@ -20,6 +20,7 @@ export async function FloatingDock() {
 
     return <FloatingDockClient navItems={navItems} />;
   } catch (error) {
-    throw error;
+    console.error("FloatingDock fetch failed", error);
+    return null;
   }
 }

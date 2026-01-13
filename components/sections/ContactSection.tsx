@@ -12,7 +12,14 @@ const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 }`);
 
 export async function ContactSection() {
-  const { data: profile } = await sanityFetch({ query: PROFILE_QUERY });
+  let profile;
+  try {
+    const result = await sanityFetch({ query: PROFILE_QUERY });
+    profile = result.data;
+  } catch (error) {
+    console.error("ContactSection fetch failed", error);
+    return null;
+  }
 
   if (!profile) {
     return null;
