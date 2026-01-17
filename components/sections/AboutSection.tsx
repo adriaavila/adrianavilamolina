@@ -1,28 +1,8 @@
-import { PortableText } from "@portabletext/react";
 import Link from "next/link";
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+import { portfolioData } from "@/lib/data/portfolio";
 
-const ABOUT_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
-  firstName,
-  lastName,
-  fullBio,
-  yearsOfExperience,
-  stats,
-  email,
-  phone,
-  location
-}`);
-
-export async function AboutSection() {
-  let profile;
-  try {
-    const result = await sanityFetch({ query: ABOUT_QUERY });
-    profile = result.data;
-  } catch (error) {
-    console.error("AboutSection fetch failed", error);
-    return null;
-  }
+export function AboutSection() {
+  const profile = portfolioData.profile;
 
   if (!profile) {
     return null;
@@ -38,73 +18,49 @@ export async function AboutSection() {
 
         <div className="prose prose-lg dark:prose-invert max-w-none">
           {profile.fullBio && (
-            <PortableText
-              value={profile.fullBio}
-              components={{
-                block: {
-                  normal: ({ children }) => (
-                    <p className="text-muted-foreground leading-relaxed mb-4">
-                      {children}
-                    </p>
-                  ),
-                  h2: ({ children }) => (
-                    <h2 className="text-3xl font-bold mt-8 mb-4">{children}</h2>
-                  ),
-                  h3: ({ children }) => (
-                    <h3 className="text-2xl font-semibold mt-6 mb-3">
-                      {children}
-                    </h3>
-                  ),
-                  blockquote: ({ children }) => (
-                    <blockquote className="border-l-4 border-primary pl-4 italic my-4">
-                      {children}
-                    </blockquote>
-                  ),
-                },
-                marks: {
-                  strong: ({ children }) => (
-                    <strong className="font-semibold text-foreground">
-                      {children}
-                    </strong>
-                  ),
-                  em: ({ children }) => <em className="italic">{children}</em>,
-                  link: ({ children, value }) => {
-                    const href = value?.href || "";
-                    const isExternal = href.startsWith("http");
+            <div className="space-y-4">
+              {profile.fullBio.map((block: any, index: number) => {
+                if (block._type === 'block') {
+                  // Handle list items
+                  if (block.listItem) {
                     return (
-                      <Link
-                        href={href}
-                        target={isExternal ? "_blank" : undefined}
-                        rel={isExternal ? "noopener noreferrer" : undefined}
-                        className="text-primary hover:underline"
-                      >
-                        {children}
-                      </Link>
-                    );
-                  },
-                },
-                list: {
-                  bullet: ({ children }) => (
-                    <ul className="list-disc list-inside space-y-2 mb-4 text-muted-foreground">
-                      {children}
-                    </ul>
-                  ),
-                  number: ({ children }) => (
-                    <ol className="list-decimal list-inside space-y-2 mb-4 text-muted-foreground">
-                      {children}
-                    </ol>
-                  ),
-                },
-              }}
-            />
+                      <ul key={block._key || index} className="list-disc list-inside space-y-2 mb-4 text-muted-foreground">
+                        <li>
+                          {block.children.map((child: any) => child.text).join('')}
+                        </li>
+                      </ul>
+                    )
+                  }
+                  // Handle normal paragraphs
+                  return (
+                    <p key={block._key || index} className="text-muted-foreground leading-relaxed">
+                      {block.children.map((child: any) => {
+                        if (child.marks && child.marks.includes('strong')) {
+                          return <strong key={child._key} className="font-semibold text-foreground">{child.text}</strong>
+                        }
+                        return child.text;
+                      })}
+                    </p>
+                  )
+                }
+                return null;
+              })}
+            </div>
           )}
         </div>
 
-        {/* Stats from CMS */}
+        {/* Stats - using Years of Experience as a stat if others are missing */}
+        {/* The new data doesn't have a 'stats' array explicitly in the same format, 
+            but we can use what we have or placeholder. 
+            For now, let's omit if not present or map if we add it to data.
+            I'll check if I added stats to portfolioData. I did not explicitly add 'stats' array.
+            I will comment this out for now to avoid errors, or add stats to portfolioData.
+        */}
+        {/* 
         {profile.stats && profile.stats.length > 0 && (
           <div className="@container mt-12 pt-12 border-t">
             <div className="grid grid-cols-2 @lg:grid-cols-4 gap-6">
-              {profile.stats.map((stat, idx) => (
+              {profile.stats.map((stat: any, idx: number) => (
                 <div
                   key={`${stat.label}-${idx}`}
                   className="@container/stat text-center"
@@ -120,6 +76,7 @@ export async function AboutSection() {
             </div>
           </div>
         )}
+        */}
       </div>
     </section>
   );

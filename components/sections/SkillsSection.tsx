@@ -1,26 +1,8 @@
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
 import { SkillsChart } from "./SkillsChart";
+import { portfolioData } from "@/lib/data/portfolio";
 
-const SKILLS_QUERY =
-  defineQuery(`*[_type == "skill"] | order(category asc, order asc){
-  name,
-  category,
-  proficiency,
-  percentage,
-  yearsOfExperience,
-  color
-}`);
-
-export async function SkillsSection() {
-  let skills;
-  try {
-    const result = await sanityFetch({ query: SKILLS_QUERY });
-    skills = result.data;
-  } catch (error) {
-    console.error("SkillsSection fetch failed", error);
-    return null;
-  }
+export function SkillsSection() {
+  const skills = portfolioData.skills;
 
   if (!skills || skills.length === 0) {
     return null;

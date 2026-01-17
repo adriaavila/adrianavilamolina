@@ -1,7 +1,5 @@
 "use server";
 
-import { serverClient } from "@/sanity/lib/serverClient";
-
 export async function submitContactForm(formData: FormData) {
   try {
     const name = formData.get("name") as string;
@@ -17,20 +15,27 @@ export async function submitContactForm(formData: FormData) {
       };
     }
 
-    // Create the document in Sanity
-    const result = await serverClient.create({
-      _type: "contact",
+    // Simulate form submission
+    console.log("Contact form submitted:", {
       name,
       email,
       subject,
       message,
       submittedAt: new Date().toISOString(),
-      status: "new",
     });
+
+    // In a real app without Sanity, you'd send an email or save to a DB here.
+    // For now, we just return success.
 
     return {
       success: true,
-      data: result,
+      data: {
+        _id: "mock-id",
+        name,
+        email,
+        subject,
+        message,
+      },
     };
   } catch (error) {
     console.error("Error submitting contact form:", error);

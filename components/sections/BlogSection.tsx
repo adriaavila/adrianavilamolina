@@ -1,31 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { defineQuery } from "next-sanity";
-import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
-
-const BLOG_QUERY = defineQuery(`*[_type == "blog"] | order(publishedAt desc){
-  title,
-  slug,
-  excerpt,
-  category,
-  tags,
-  publishedAt,
-  readTime,
-  featuredImage
-}`);
+import { portfolioData } from "@/lib/data/portfolio";
 
 export async function BlogSection() {
-  let posts;
-  try {
-    const result = await sanityFetch({
-      query: BLOG_QUERY,
-    });
-    posts = result.data;
-  } catch (error) {
-    console.error("BlogSection fetch failed", error);
-    return null;
-  }
+  const posts = portfolioData.blog;
 
   if (!posts || posts.length === 0) {
     return null;
@@ -44,10 +22,10 @@ export async function BlogSection() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Latest Blog Posts
+            The Vibecoding Journal
           </h2>
           <p className="text-xl text-muted-foreground">
-            Thoughts, tutorials, and insights
+            Thoughts on coding, freedom, and the energy of creation
           </p>
         </div>
 
@@ -61,10 +39,7 @@ export async function BlogSection() {
                 {post.featuredImage && (
                   <div className="relative aspect-video overflow-hidden bg-muted">
                     <Image
-                      src={urlFor(post.featuredImage)
-                        .width(600)
-                        .height(400)
-                        .url()}
+                      src={post.featuredImage}
                       alt={post.title || "Blog post"}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"

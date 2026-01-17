@@ -1,25 +1,10 @@
 import Link from "next/link";
-import { defineQuery } from "next-sanity";
 import WorldMapDemo from "@/components/world-map-demo";
-import { sanityFetch } from "@/sanity/lib/live";
 import { ContactForm } from "./ContactForm";
+import { portfolioData } from "@/lib/data/portfolio";
 
-const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
-  email,
-  phone,
-  location,
-  socialLinks
-}`);
-
-export async function ContactSection() {
-  let profile;
-  try {
-    const result = await sanityFetch({ query: PROFILE_QUERY });
-    profile = result.data;
-  } catch (error) {
-    console.error("ContactSection fetch failed", error);
-    return null;
-  }
+export function ContactSection() {
+  const profile = portfolioData.profile;
 
   if (!profile) {
     return null;
@@ -144,36 +129,6 @@ export async function ContactSection() {
                         className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
                       >
                         Website
-                      </Link>
-                    )}
-                    {profile.socialLinks.medium && (
-                      <Link
-                        href={profile.socialLinks.medium}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
-                      >
-                        Medium
-                      </Link>
-                    )}
-                    {profile.socialLinks.devto && (
-                      <Link
-                        href={profile.socialLinks.devto}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
-                      >
-                        Dev.to
-                      </Link>
-                    )}
-                    {profile.socialLinks.youtube && (
-                      <Link
-                        href={profile.socialLinks.youtube}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1.5 @md/info:px-4 @md/info:py-2 rounded-lg border hover:bg-accent transition-colors text-xs @md/info:text-sm"
-                      >
-                        YouTube
                       </Link>
                     )}
                   </div>

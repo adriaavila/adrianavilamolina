@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import type { CHAT_PROFILE_QUERYResult } from "@/sanity.types";
 import { useSidebar } from "../ui/sidebar";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -14,8 +13,13 @@ interface Message {
   timestamp: Date;
 }
 
+interface ChatProfile {
+  firstName?: string | null;
+  lastName?: string | null;
+}
+
 interface ChatProps {
-  profile: CHAT_PROFILE_QUERYResult | null;
+  profile: ChatProfile | null;
 }
 
 export function Chat({ profile }: ChatProps) {
@@ -107,7 +111,7 @@ export function Chat({ profile }: ChatProps) {
       }
 
       const data = await response.json();
-      
+
       // Handle streaming response or direct response
       let assistantContent = "";
       if (data.stream) {
@@ -207,16 +211,14 @@ export function Chat({ profile }: ChatProps) {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${
-                  message.role === "user" ? "justify-end" : "justify-start"
-                }`}
+                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"
+                  }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === "user"
+                  className={`max-w-[80%] rounded-lg p-3 ${message.role === "user"
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted"
-                  }`}
+                    }`}
                 >
                   <p className="whitespace-pre-wrap wrap-break-word">
                     {message.content}

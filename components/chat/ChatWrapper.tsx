@@ -1,36 +1,9 @@
-import { defineQuery } from "next-sanity";
 import Chat from "@/components/chat/Chat";
-import { sanityFetch } from "@/sanity/lib/live";
 import SidebarToggle from "../SidebarToggle";
+import { portfolioData } from "@/lib/data/portfolio";
 
-const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
-    _id,
-    _type,
-    _createdAt,
-    _updatedAt,
-    _rev,
-    firstName,
-    lastName,
-    headline,
-    shortBio,
-    email,
-    phone,
-    location,
-    availability,
-    socialLinks,
-    yearsOfExperience,
-    profileImage
-  }`);
-
-async function ChatWrapper() {
-  let profile;
-  try {
-    const result = await sanityFetch({ query: CHAT_PROFILE_QUERY });
-    profile = result.data;
-  } catch (error) {
-    console.error("ChatWrapper fetch failed", error);
-    return null;
-  }
+function ChatWrapper() {
+  const profile = portfolioData.profile;
 
   return (
     <div className="h-full w-full">
@@ -38,7 +11,7 @@ async function ChatWrapper() {
         <SidebarToggle />
       </div>
 
-      <Chat profile={profile} />
+      <Chat profile={profile as any} />
     </div>
   );
 }
