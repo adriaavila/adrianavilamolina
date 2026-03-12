@@ -1,82 +1,56 @@
-# Adrian Avila Molina - Portfolio & Vibecoding Journal
+# AdrianAvilaMolina
 
-A personal portfolio and journal focused on "Vibecoding" — building high-leverage B2B solutions and AI-driven products with a clear mind and optimized flow.
+Portfolio personal y journal de construcción digital orientado a mostrar experiencia, proyectos, narrativa profesional y una capa de interacción asistida por IA.
 
-This project represents my digital twin, showcasing my journey from Industrial Engineering to Full-Stack Development and Business Intelligence.
+## Qué es este proyecto
 
-## 🚀 About Me & The Project
+Este proyecto funciona como identidad digital y escaparate profesional. Reúne experiencia, proyectos, enfoque de trabajo y una visión personal sobre creación de productos, desarrollo y “vibecoding”.
 
-I am a **Full-Stack Developer, Business Intelligence Developer, and Data Analyst** with a passion for optimizing systems.
-This website showcases:
-- **Professional Experience:** My work in BI, Data Analytics, and Web Development.
-- **Projects:** Examples of high-leverage B2B solutions and SaaS products.
-- **Vibecoding Journal:** My thoughts on flow state, productivity, and the "Vibecoding" lifestyle.
-- **AI Twin:** An intelligent chat interface that can answer questions about my background (powered by OpenAI).
+## El reto
 
-## 🛠️ Tech Stack
+El reto principal fue **crear un portfolio que no se sintiera como una hoja de vida estática**.
 
-- **Framework:** Next.js 16 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS, Framer Motion for animations.
-- **Data Source:** Local Data (`lib/data/portfolio.ts`).
-  - *Note: Originally based on Sanity CMS, this project has been migrated to use local data for simplicity and performance.*
-- **Authentication:** Clerk (for admin/protected routes if applicable).
-- **AI Integration:** OpenAI ChatKit.
+La intención era construir una presencia digital con más profundidad:
 
-## 📦 Getting Started
+- mostrar trayectoria sin verse genérico
+- presentar proyectos con narrativa propia
+- reflejar personalidad y criterio profesional
+- integrar una experiencia moderna que eleve la percepción del perfil
 
-### Prerequisites
+## Cómo lo resolví
 
-- Node.js 18+
-- npm, yarn, or pnpm
+- Organicé el contenido como una experiencia de marca personal, no solo como CV.
+- Centralicé la información del portfolio en datos locales para facilitar mantenimiento.
+- Estructuré la web para combinar presentación profesional, proyectos y journal.
+- Incorporé una capa de AI Twin para hacer la experiencia más interactiva y distintiva.
 
-### Installation
+## Stack
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <your-repo-url>
-    cd ai-portfolio-adrianavilamolina
-    ```
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Clerk
+- OpenAI
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+## Lo que hace valioso este proyecto
 
-3.  **Environment Variables:**
-    Create a `.env.local` file with the necessary keys (Clerk, OpenAI).
-    ```env
-    # Clerk
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
-    CLERK_SECRET_KEY=...
+Este proyecto muestra cómo convertir un portfolio en un producto personal con identidad. Más que listar experiencia, busca **construir posicionamiento profesional**.
 
-    # OpenAI (for AI Twin)
-    OPENAI_API_KEY=...
-    ```
+## Aprendizajes
 
-4.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
+- Un portfolio fuerte comunica criterio, no solo historial.
+- La narrativa personal puede ser una ventaja competitiva si está bien integrada.
+- Mantener el contenido desacoplado de la UI mejora mucho la escalabilidad del sitio.
 
-    Open [http://localhost:3000](http://localhost:3000) with your browser.
+## Desarrollo local
 
-## 📝 Managing Content
+```bash
+npm install
+npm run dev
+```
 
-The core content of this portfolio is now managed locally.
+## Enlace del proyecto
 
-**Drafting & Editing:**
-- Open `lib/data/portfolio.ts`.
-- Update the `profile`, `experience`, `education`, `skills`, or `projects` objects.
-- Changes reflect instantly in development.
-
-## 📁 Project Structure
-
-- `app/`: Next.js App Router pages and layouts.
-- `components/`: Reusable React components.
-- `lib/data/`: **Source of Truth** for portfolio content (`portfolio.ts`).
-- `Data/`: Legacy Sanity data dumps (kept for reference).
-
----
-
-*Original template by Sonny Sangha (Next-Gen Portfolio).*
+- Repositorio: https://github.com/adriaavila/adrianavilamolina
