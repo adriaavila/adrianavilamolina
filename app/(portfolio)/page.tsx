@@ -1,12 +1,19 @@
-import { Suspense } from "react";
 import PortfolioContent from "@/components/PortfolioContent";
+import type { SiteLocale } from "@/lib/data/site-content";
 
-export default function Home() {
+type HomeProps = {
+  searchParams: Promise<{
+    lang?: string;
+  }>;
+};
+
+export default async function Home({ searchParams }: HomeProps) {
+  const { lang } = await searchParams;
+  const locale: SiteLocale = lang === "es" ? "es" : "en";
+
   return (
     <main className="min-h-screen">
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-        <PortfolioContent />
-      </Suspense>
+      <PortfolioContent locale={locale} />
     </main>
   );
 }

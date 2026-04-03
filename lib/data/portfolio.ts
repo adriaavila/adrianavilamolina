@@ -180,6 +180,7 @@ export const portfolioData = {
             description: "Amenity reservation webapp for residential communities",
             liveUrl: "https://reservas-verona.vercel.app/",
             featured: true,
+            image: "/images/projects/reservas-verona.png",
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         },
         {
@@ -190,6 +191,7 @@ export const portfolioData = {
             description: "Mental health and sobriety support webapp",
             liveUrl: "https://pausa-beta.vercel.app/",
             featured: true,
+            image: "/images/projects/pausa-app.png",
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         },
         {
@@ -200,6 +202,7 @@ export const portfolioData = {
             description: "Creative agency website with modern design",
             liveUrl: "https://www.servicioscreativos.online/",
             featured: true,
+            image: "/images/projects/servicios-creativos.png",
             technologies: ["React", "Next.js", "TypeScript"]
         },
         {
@@ -210,6 +213,7 @@ export const portfolioData = {
             description: "Digital art e-commerce platform",
             liveUrl: "https://artistheway.vercel.app/",
             featured: true,
+            image: "/images/projects/artist-the-way.png",
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         },
         {
@@ -220,6 +224,7 @@ export const portfolioData = {
             description: "Rehab center website redesign",
             liveUrl: "https://vistacampo-redesign-4r.vercel.app/es/",
             featured: true,
+            image: "/images/projects/vista-campo.png",
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         },
         {
@@ -230,6 +235,7 @@ export const portfolioData = {
             description: "Premium coffee e-commerce experience",
             liveUrl: "https://kawsay.vercel.app/",
             featured: true,
+            image: "/images/projects/kawsay-coffee.png",
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         }
     ],

@@ -34,13 +34,25 @@ export function ProjectsSection() {
               key={project.slug?.current}
               className="group relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
             >
-              {/* Abstract Gradient Cover since we might lack images */}
-              <div className={`h-48 w-full bg-gradient-to-br transition-transform duration-700 group-hover:scale-105 ${index % 3 === 0 ? 'from-blue-600/20 to-purple-600/20' :
-                  index % 3 === 1 ? 'from-emerald-500/20 to-blue-500/20' :
+              {/* Project Image or Fallback */}
+              <div className="h-48 w-full overflow-hidden relative">
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className={`h-full w-full bg-gradient-to-br transition-transform duration-700 group-hover:scale-105 ${
+                    index % 3 === 0 ? 'from-blue-600/20 to-purple-600/20' :
+                    index % 3 === 1 ? 'from-emerald-500/20 to-blue-500/20' :
                     'from-orange-500/20 to-red-500/20'
-                } flex items-center justify-center relative`}>
-                <div className="absolute inset-0 bg-grid-white/5 bg-[length:20px_20px]" />
-                <span className="text-6xl opacity-20 font-bold select-none">{project.title.charAt(0)}</span>
+                  } flex items-center justify-center relative`}>
+                    <div className="absolute inset-0 bg-grid-white/5 bg-[length:20px_20px]" />
+                    <span className="text-6xl opacity-20 font-bold select-none">{project.title.charAt(0)}</span>
+                  </div>
+                )}
               </div>
 
               <div className="p-8 flex-1 flex flex-col">

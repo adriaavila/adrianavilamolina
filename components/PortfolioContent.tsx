@@ -1,22 +1,12 @@
-import {
-  AboutSection,
-  BlogSection,
-  ContactSection,
-  HeroSection,
-  ProjectsSection,
-} from "@/components/sections";
+import { PremiumPortfolio } from "@/components/PremiumPortfolio";
+import type { SiteLocale } from "@/lib/data/site-content";
 
-async function PortfolioContent() {
-  return (
-    <>
-      <HeroSection />
-      <AboutSection />
+type PortfolioContentProps = {
+  locale: SiteLocale;
+};
 
-      <ProjectsSection />
-      <BlogSection />
-      <ContactSection />
-    </>
-  );
+function PortfolioContent({ locale }: PortfolioContentProps) {
+  return <PremiumPortfolio locale={locale} />;
 }
 
 export default PortfolioContent;

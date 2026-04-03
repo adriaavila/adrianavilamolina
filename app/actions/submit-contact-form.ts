@@ -2,13 +2,13 @@
 
 export async function submitContactForm(formData: FormData) {
   try {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const subject = formData.get("subject") as string;
-    const message = formData.get("message") as string;
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const subject = String(formData.get("subject") || "").trim();
+    const message = String(formData.get("message") || "").trim();
 
     // Validate the required fields
-    if (!name || !email || !message) {
+    if (!name || !email || !subject || !message) {
       return {
         success: false,
         error: "Please fill in all required fields",
