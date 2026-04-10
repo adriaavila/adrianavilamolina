@@ -195,17 +195,6 @@ export const portfolioData = {
             technologies: ["React", "Next.js", "TypeScript", "Vercel"]
         },
         {
-            _id: "proj-3",
-            title: "Servicios Creativos",
-            slug: { current: "servicios-creativos" },
-            tagline: "Creative agency website with modern design",
-            description: "Creative agency website with modern design",
-            liveUrl: "https://www.servicioscreativos.online/",
-            featured: true,
-            image: "/images/projects/servicios-creativos.png",
-            technologies: ["React", "Next.js", "TypeScript"]
-        },
-        {
             _id: "proj-4",
             title: "Artist The Way",
             slug: { current: "artist-the-way" },

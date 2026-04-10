@@ -98,12 +98,6 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
     locale === "es"
       ? "Precios base. El alcance final depende del stack, integraciones y claridad del brief."
       : "Base prices. Final scope depends on the stack, integrations, and clarity of the brief.";
-  const selectedProjectsLabel =
-    locale === "es" ? "Builds seleccionados" : "Selected builds";
-  const workSupportCopy =
-    locale === "es"
-      ? "Cada proyecto está elegido porque resolvió una necesidad real de operación, percepción o conversión."
-      : "Each project is selected because it solved a real operational, positioning, or conversion problem.";
   const featuredProjects = content.work.items.flatMap((item) => {
     const project = portfolioData.projects.find(
       (entry) => entry.slug.current === item.slug,
@@ -579,137 +573,54 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
             </div>
           </section>
 
-          <section id="work" className="bg-foreground text-background">
-            <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-              <div className="lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] lg:gap-12">
-                <div className="pb-8 lg:sticky lg:top-24 lg:self-start">
-                  <div className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-primary/85">
-                    {content.work.eyebrow}
-                  </div>
-                  <h2 className="mt-4 font-[family:var(--font-display)] text-4xl leading-[1.02] text-background sm:text-5xl">
-                    {content.work.title}
-                  </h2>
-                  <p className="mt-5 max-w-sm text-base leading-7 text-white/68 sm:text-lg">
-                    {content.work.description}
-                  </p>
-
-                  <div className="mt-10 border-t border-white/12 pt-6">
-                    <div className="text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-white/44">
-                      {selectedProjectsLabel}
-                    </div>
-                    <div className="mt-4 font-[family:var(--font-display)] text-6xl leading-none text-background">
-                      {String(featuredProjects.length).padStart(2, "0")}
-                    </div>
-                    <p className="mt-4 max-w-xs text-sm leading-7 text-white/56">
-                      {workSupportCopy}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-10">
-                  {featuredProjects.map(
-                    (
-                      { category, deliverables, impact, project, summary },
-                      index,
-                    ) => (
-                      <article
-                        key={project.slug.current}
-                        className="grid gap-8 border-t border-white/12 pt-10 first:border-t-0 lg:grid-cols-[minmax(0,1fr)_minmax(21rem,0.95fr)] lg:items-stretch"
+          <section
+            id="work"
+            className="relative overflow-hidden bg-[#04070f] py-32"
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(134,247,255,0.08),transparent_25%),radial-gradient(circle_at_78%_18%,rgba(224,185,125,0.08),transparent_30%)]" />
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+                {featuredProjects.map(
+                  (
+                    { project },
+                    index,
+                  ) => (
+                    <article
+                      key={project.slug.current}
+                      className="group relative"
+                    >
+                      <Link 
+                        href={project.liveUrl || '#'} 
+                        target={project.liveUrl ? "_blank" : undefined}
+                        rel={project.liveUrl ? "noopener noreferrer" : undefined}
+                        className="block relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] shadow-[0_32px_90px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_45px_120px_rgba(0,0,0,0.5)]"
                       >
-                        <div className="flex flex-col">
-                          <div className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-white/48">
-                            {String(index + 1).padStart(2, "0")} / {category}
-                          </div>
-                          <h3 className="mt-4 font-[family:var(--font-display)] text-5xl leading-[0.96] text-background">
-                            {project.title}
-                          </h3>
-                          <p className="mt-4 max-w-xl text-base leading-7 text-white/68">
-                            {summary}
-                          </p>
-
-                          <ul className="mt-6 flex flex-wrap gap-2">
-                            {deliverables.map((item) => (
-                              <li
-                                key={item}
-                                className="rounded-full border border-white/12 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/66"
-                              >
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-
-                          {project.liveUrl ? (
-                            <Link
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold uppercase tracking-[0.18em] text-background transition-[transform,color] hover:-translate-y-0.5 hover:text-primary"
-                            >
-                              {content.work.viewLabel}
-                              <ArrowUpRight
-                                className="h-4 w-4"
-                                aria-hidden="true"
-                              />
-                            </Link>
-                          ) : null}
-                        </div>
-
-                        <div
-                          className={`group relative overflow-hidden border border-white/12 p-6 sm:p-8 ${projectPlanes[index % projectPlanes.length]}`}
-                        >
+                        <div className="relative aspect-[16/10] overflow-hidden">
                           {project.image ? (
-                            <>
-                              <Image 
-                                src={project.image} 
-                                alt={project.title} 
-                                fill 
-                                className="object-cover object-top opacity-30 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-60" 
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-transparent pointer-events-none transition-opacity duration-700 group-hover:opacity-80" />
-                            </>
+                            <Image
+                              src={project.image}
+                              alt={project.title}
+                              fill
+                              className="object-cover object-top transition-transform duration-1000 group-hover:scale-[1.05]"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                           ) : (
-                            <div className="absolute right-5 top-3 text-[5rem] font-semibold uppercase tracking-[-0.08em] text-white/6">
-                              {String(index + 1).padStart(2, "0")}
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_40%)] flex items-center justify-center">
+                              <span className="text-white/10 text-6xl font-black uppercase tracking-tighter">{project.title.charAt(0)}</span>
                             </div>
                           )}
-
-                          <div className="relative flex min-h-[18rem] flex-col justify-between">
-                            <div className="flex items-start justify-between gap-4">
-                              <div className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/48">
-                                {project.slug.current.replace(/-/g, " ")}
-                              </div>
-                              <span className="rounded-full border border-white/12 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-white/66">
-                                Live
-                              </span>
-                            </div>
-
-                            <p className="mt-10 max-w-xl font-[family:var(--font-display)] text-2xl leading-[1.08] text-background sm:text-3xl">
-                              {impact}
-                            </p>
-
-                            <div className="mt-10 border-t border-white/12 pt-6">
-                              <div className="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-white/44">
-                                Stack
-                              </div>
-                              <div className="mt-4 flex flex-wrap gap-2">
-                                {project.technologies
-                                  .slice(0, 4)
-                                  .map((tech) => (
-                                    <span
-                                      key={tech}
-                                      className="border border-white/12 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-white/66"
-                                    >
-                                      {tech}
-                                    </span>
-                                  ))}
-                              </div>
-                            </div>
+                          
+                          {/* Subtle Glass Overlay on Hover */}
+                          <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
+                             <div className="rounded-full bg-white/10 backdrop-blur-md border border-white/20 p-4 transform translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
+                                <ArrowUpRight className="h-6 w-6 text-white" />
+                             </div>
                           </div>
                         </div>
-                      </article>
-                    ),
-                  )}
-                </div>
+                      </Link>
+                    </article>
+                  )
+                )}
               </div>
             </div>
           </section>

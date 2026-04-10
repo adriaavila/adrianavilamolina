@@ -303,19 +303,6 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
           ],
         },
         {
-          slug: "servicios-creativos",
-          category: "Service Brand Website",
-          summary:
-            "Creative agency website built to improve perception, explain the offer faster, and make the brand feel more current.",
-          impact:
-            "Turned the site into a stronger sales surface with cleaner positioning and better visual rhythm.",
-          deliverables: [
-            "Offer positioning",
-            "Premium web presence",
-            "Stronger visual hierarchy",
-          ],
-        },
-        {
           slug: "artist-the-way",
           category: "Creative Commerce",
           summary:
@@ -615,19 +602,6 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
             "Recorrido guiado",
             "Sistema visual sereno",
             "Flujo centrado en soporte",
-          ],
-        },
-        {
-          slug: "servicios-creativos",
-          category: "Web para Marca de Servicios",
-          summary:
-            "Sitio para agencia creativa pensado para mejorar percepción, explicar la oferta más rápido y dar una imagen más actual.",
-          impact:
-            "Convirtió el sitio en una superficie de venta más fuerte, con mejor posicionamiento y ritmo visual.",
-          deliverables: [
-            "Posicionamiento de oferta",
-            "Presencia web premium",
-            "Jerarquía visual más fuerte",
           ],
         },
         {
