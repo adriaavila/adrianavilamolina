@@ -15,6 +15,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "@/components/sections/ContactForm";
 import {
+  type WorkProject,
+  WorkShowcase,
+} from "@/components/sections/WorkShowcase";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,13 +34,6 @@ import { StudioScene } from "./StudioScene";
 type PremiumPortfolioProps = {
   locale: SiteLocale;
 };
-
-const projectPlanes = [
-  "bg-[radial-gradient(circle_at_top_left,rgba(224,185,125,0.28),transparent_35%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))]",
-  "bg-[radial-gradient(circle_at_top_left,rgba(141,192,184,0.24),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))]",
-  "bg-[radial-gradient(circle_at_top_left,rgba(215,165,108,0.24),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))]",
-  "bg-[radial-gradient(circle_at_top_left,rgba(127,141,182,0.26),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01))]",
-];
 
 const pricingPlanes = [
   "bg-[radial-gradient(circle_at_top_left,rgba(224,185,125,0.12),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0))]",
@@ -98,13 +95,32 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
     locale === "es"
       ? "Precios base. El alcance final depende del stack, integraciones y claridad del brief."
       : "Base prices. Final scope depends on the stack, integrations, and clarity of the brief.";
-  const featuredProjects = content.work.items.flatMap((item) => {
-    const project = portfolioData.projects.find(
-      (entry) => entry.slug.current === item.slug,
-    );
+  const workProjects: WorkProject[] = content.work.items.flatMap(
+    (item, index) => {
+      const project = portfolioData.projects.find(
+        (entry) => entry.slug.current === item.slug,
+      );
 
-    return project ? [{ ...item, project }] : [];
-  });
+      if (!project) {
+        return [];
+      }
+
+      return [
+        {
+          slug: item.slug,
+          title: project.title,
+          category: item.category,
+          summary: item.summary,
+          kind: project.kind === "app" ? ("app" as const) : ("web" as const),
+          year: project.year,
+          isLatest: index === 0,
+          image: project.image ?? null,
+          liveUrl: project.liveUrl ?? null,
+          technologies: project.technologies,
+        },
+      ];
+    },
+  );
 
   const socialLinks = [
     {
@@ -573,57 +589,11 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
             </div>
           </section>
 
-          <section
-            id="work"
-            className="relative overflow-hidden bg-[#04070f] py-32"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(134,247,255,0.08),transparent_25%),radial-gradient(circle_at_78%_18%,rgba(224,185,125,0.08),transparent_30%)]" />
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
-                {featuredProjects.map(
-                  (
-                    { project },
-                    index,
-                  ) => (
-                    <article
-                      key={project.slug.current}
-                      className="group relative"
-                    >
-                      <Link 
-                        href={project.liveUrl || '#'} 
-                        target={project.liveUrl ? "_blank" : undefined}
-                        rel={project.liveUrl ? "noopener noreferrer" : undefined}
-                        className="block relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] shadow-[0_32px_90px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_45px_120px_rgba(0,0,0,0.5)]"
-                      >
-                        <div className="relative aspect-[16/10] overflow-hidden">
-                          {project.image ? (
-                            <Image
-                              src={project.image}
-                              alt={project.title}
-                              fill
-                              className="object-cover object-top transition-transform duration-1000 group-hover:scale-[1.05]"
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                            />
-                          ) : (
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_40%)] flex items-center justify-center">
-                              <span className="text-white/10 text-6xl font-black uppercase tracking-tighter">{project.title.charAt(0)}</span>
-                            </div>
-                          )}
-                          
-                          {/* Subtle Glass Overlay on Hover */}
-                          <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">
-                             <div className="rounded-full bg-white/10 backdrop-blur-md border border-white/20 p-4 transform translate-y-4 transition-transform duration-300 group-hover:translate-y-0">
-                                <ArrowUpRight className="h-6 w-6 text-white" />
-                             </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </article>
-                  )
-                )}
-              </div>
-            </div>
-          </section>
+          <WorkShowcase
+            content={content.work}
+            projects={workProjects}
+            githubUrl={profile.socialLinks.github}
+          />
 
           <section id="process" className="border-b border-border/60">
             <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

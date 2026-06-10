@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lottie-player",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "lottie-player", "run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 3000
+    }
+  ]
+}

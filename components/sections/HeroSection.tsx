@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
+import { DarkSideOfTheMoon } from "@/components/ui/dark-side-of-the-moon";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
 import { ProfileImage } from "./ProfileImage";
 import { portfolioData } from "@/lib/data/portfolio";
@@ -14,10 +14,13 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
+      className="dark relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden bg-[#060A13] text-foreground"
     >
-      {/* Background Ripple Effect */}
-      <BackgroundRippleEffect rows={8} cols={27} cellSize={56} />
+      {/* Dark Side of the Moon prism animation */}
+      <div className="absolute inset-0">
+        <DarkSideOfTheMoon className="absolute inset-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#060A13] via-[#060A13]/55 to-transparent" />
+      </div>
 
       <div className="relative z-10 container mx-auto max-w-6xl">
         <div className="@container">

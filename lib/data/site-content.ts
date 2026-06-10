@@ -92,6 +92,10 @@ type LocaleContent = {
     title: string;
     description: string;
     viewLabel: string;
+    headline: { line1: string; line2: string };
+    filters: { all: string; web: string; app: string };
+    liveLabel: string;
+    latestLabel: string;
     items: FeaturedProject[];
   };
   process: {
@@ -275,7 +279,24 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
       description:
         "A curated lineup of launches, redesigns, and digital products built to reduce friction, increase trust, and move ideas into the market faster.",
       viewLabel: "View Live Project",
+      headline: { line1: "Webs &", line2: "Apps" },
+      filters: { all: "All", web: "Webs", app: "Apps" },
+      liveLabel: "Visit live",
+      latestLabel: "Latest build",
       items: [
+        {
+          slug: "mistica-app",
+          category: "Operations Platform",
+          summary:
+            "Management platform for a swim school — real-time attendance, billing, and WhatsApp campaigns in one admin portal.",
+          impact:
+            "Replaced scattered spreadsheets with a single real-time operational hub.",
+          deliverables: [
+            "Real-time attendance",
+            "Billing & sales flows",
+            "WhatsApp campaign engine",
+          ],
+        },
         {
           slug: "reservas-verona",
           category: "Residential SaaS",
@@ -300,6 +321,19 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
             "Guided user journey",
             "Calm interface system",
             "Support-first flow",
+          ],
+        },
+        {
+          slug: "servicios-creativos",
+          category: "Agency Website",
+          summary:
+            "Creative agency website rebuilt with a modern visual system and clearer service storytelling.",
+          impact:
+            "Sharper positioning and a faster path from first visit to inquiry.",
+          deliverables: [
+            "Visual system refresh",
+            "Service storytelling",
+            "Inquiry-ready flow",
           ],
         },
         {
@@ -577,7 +611,24 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
       description:
         "Una selección de lanzamientos, rediseños y productos digitales pensados para reducir fricción, elevar confianza y llevar ideas al mercado más rápido.",
       viewLabel: "Ver Proyecto Online",
+      headline: { line1: "Webs &", line2: "Apps" },
+      filters: { all: "Todo", web: "Webs", app: "Apps" },
+      liveLabel: "Ver online",
+      latestLabel: "Último build",
       items: [
+        {
+          slug: "mistica-app",
+          category: "Plataforma de Operaciones",
+          summary:
+            "Plataforma de gestión para una escuela de natación — asistencia en tiempo real, facturación y campañas de WhatsApp en un solo portal.",
+          impact:
+            "Reemplazó planillas dispersas por un hub operativo en tiempo real.",
+          deliverables: [
+            "Asistencia en tiempo real",
+            "Facturación y ventas",
+            "Motor de campañas WhatsApp",
+          ],
+        },
         {
           slug: "reservas-verona",
           category: "SaaS Residencial",
@@ -602,6 +653,19 @@ export const portfolioSiteContent: Record<SiteLocale, LocaleContent> = {
             "Recorrido guiado",
             "Sistema visual sereno",
             "Flujo centrado en soporte",
+          ],
+        },
+        {
+          slug: "servicios-creativos",
+          category: "Web de Agencia",
+          summary:
+            "Web de agencia creativa reconstruida con un sistema visual moderno y una narrativa de servicios más clara.",
+          impact:
+            "Posicionamiento más nítido y un camino más corto de visita a consulta.",
+          deliverables: [
+            "Sistema visual renovado",
+            "Narrativa de servicios",
+            "Flujo listo para consultas",
           ],
         },
         {
