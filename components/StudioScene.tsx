@@ -128,15 +128,73 @@ export function StudioScene() {
 
     scene.add(beams);
 
+    // Target pointer is what input writes to; `pointer` is the eased value the
+    // render loop reads, so touch/tilt input feels smooth instead of jumpy.
     const pointer = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+
+    const setTargetFromPoint = (clientX: number, clientY: number) => {
+      const bounds = container.getBoundingClientRect();
+      const relativeX = (clientX - bounds.left) / bounds.width;
+      const relativeY = (clientY - bounds.top) / bounds.height;
+
+      target.x = (relativeX - 0.5) * 1.1;
+      target.y = (relativeY - 0.5) * 1.1;
+    };
 
     const handlePointerMove = (event: PointerEvent) => {
-      const bounds = container.getBoundingClientRect();
-      const relativeX = (event.clientX - bounds.left) / bounds.width;
-      const relativeY = (event.clientY - bounds.top) / bounds.height;
+      setTargetFromPoint(event.clientX, event.clientY);
+    };
 
-      pointer.x = (relativeX - 0.5) * 1.1;
-      pointer.y = (relativeY - 0.5) * 1.1;
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+
+      if (touch) {
+        setTargetFromPoint(touch.clientX, touch.clientY);
+      }
+    };
+
+    const clamp = (value: number) => Math.max(-1, Math.min(1, value));
+
+    // Accelerometer / gyroscope tilt. gamma = left/right, beta = front/back.
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      if (event.gamma == null || event.beta == null) {
+        return;
+      }
+
+      target.x = clamp(event.gamma / 35) * 0.9;
+      target.y = clamp((event.beta - 45) / 35) * 0.9;
+    };
+
+    let orientationBound = false;
+
+    const bindOrientation = () => {
+      if (orientationBound) {
+        return;
+      }
+
+      orientationBound = true;
+      window.addEventListener("deviceorientation", handleOrientation);
+    };
+
+    // iOS 13+ gates motion sensors behind a permission prompt that must be
+    // requested from a user gesture; other platforms expose them directly.
+    const requestOrientationPermission = () => {
+      const DOE = window.DeviceOrientationEvent as unknown as {
+        requestPermission?: () => Promise<PermissionState>;
+      };
+
+      if (DOE && typeof DOE.requestPermission === "function") {
+        DOE.requestPermission()
+          .then((state) => {
+            if (state === "granted") {
+              bindOrientation();
+            }
+          })
+          .catch(() => {});
+      } else {
+        bindOrientation();
+      }
     };
 
     const handleResize = () => {
@@ -150,7 +208,13 @@ export function StudioScene() {
     };
 
     container.addEventListener("pointermove", handlePointerMove);
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("resize", handleResize);
+    // Bind tilt immediately where allowed; defer iOS permission to first touch.
+    bindOrientation();
+    window.addEventListener("touchstart", requestOrientationPermission, {
+      once: true,
+    });
 
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -161,6 +225,9 @@ export function StudioScene() {
     const render = () => {
       const elapsed = (performance.now() - startedAt) / 1000;
       const pace = prefersReducedMotion ? 0.35 : 1;
+
+      pointer.x += (target.x - pointer.x) * 0.08;
+      pointer.y += (target.y - pointer.y) * 0.08;
 
       rootGroup.rotation.y = elapsed * 0.22 * pace + pointer.x * 0.28;
       rootGroup.rotation.x =
@@ -188,6 +255,9 @@ export function StudioScene() {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener("resize", handleResize);
       container.removeEventListener("pointermove", handlePointerMove);
+      container.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("deviceorientation", handleOrientation);
+      window.removeEventListener("touchstart", requestOrientationPermission);
 
       particleGeometry.dispose();
       renderer.dispose();

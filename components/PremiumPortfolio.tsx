@@ -348,10 +348,10 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
                 </div>
               </div>
 
-              <div className="relative min-h-[32rem] overflow-hidden border-t border-white/8 lg:min-h-[100svh] lg:border-l lg:border-t-0">
+              <div className="relative min-h-[34rem] overflow-hidden border-t border-white/8 sm:min-h-[38rem] lg:min-h-[100svh] lg:border-l lg:border-t-0">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(114,246,255,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(72,112,255,0.16),transparent_32%)]" />
                 <StudioScene />
-                <div className="absolute left-6 top-20 flex items-center gap-3 rounded-full border border-white/10 bg-black/26 px-3 py-2 backdrop-blur-md sm:left-8 sm:top-24">
+                <div className="absolute left-4 right-4 top-5 z-10 flex w-fit items-center gap-3 rounded-full border border-white/10 bg-black/40 px-3 py-2 backdrop-blur-md sm:left-8 sm:right-auto sm:top-24">
                   <div className="relative h-11 w-11 overflow-hidden rounded-full border border-white/12">
                     <Image
                       src={profile.profileImage}
@@ -372,7 +372,7 @@ export function PremiumPortfolio({ locale }: PremiumPortfolioProps) {
                   </div>
                 </div>
 
-                <div className="relative flex h-full min-h-[32rem] flex-col p-6 pt-20 text-white sm:p-8 sm:pt-24 lg:p-10 lg:pt-28">
+                <div className="pointer-events-none relative flex h-full min-h-[34rem] flex-col justify-end p-6 pb-10 text-white sm:min-h-[38rem] sm:justify-start sm:p-8 sm:pt-24 lg:p-10 lg:pt-28">
                   <div className="ml-auto max-w-[16rem] space-y-3 text-right">
                     {content.hero.stack.slice(0, 4).map((item, index) => (
                       <div
